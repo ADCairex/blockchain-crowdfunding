@@ -21,10 +21,11 @@ const loadProjects = async () => {
     const projectContract = contract(ProjectJSON);
     projectContract.setProvider(web3.currentProvider);
     const projectInstance = await projectContract.at(address);
+
     return projectInstance;
   });
 
-  return await Promise.all(projectContracts);
+  return projectContracts;
 };
 
 const loadCrowdfundingContract = async () => {

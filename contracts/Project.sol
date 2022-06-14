@@ -8,11 +8,9 @@ contract Project {
     uint public goal;
     uint public currentBalance;
 
-    // Map to manage the contributors
     mapping(address => uint) contributors;
     address[] private contributorsList;
 
-    // Event for when a project is finished
     event ProjectFinished(
         address contractAddress,
         address fundator,
@@ -20,8 +18,12 @@ contract Project {
         uint currentBalance
     );
     
-    // Event for when return the contribution to a contributor
     event ReturnContribution(
+        address contributor,
+        uint contribution
+    );
+
+    event Contribute(
         address contributor,
         uint contribution
     );
@@ -72,21 +74,21 @@ contract Project {
         }
     }
 
-    function contribute(uint contribution) external payable {
+    function contribute() external payable {
         require(msg.sender != creator, "You can't contribute to your own project");
         require(msg.value > 0, "You can't contribute 0 ether");
-        require(msg.value <= contribution, "You don't have enough ether");
         require(msg.value <= ((goal - currentBalance) * 1 ether), "You can't contribute more than the goal");
 
         currentBalance += msg.value / 1 ether;
         contributors[msg.sender] += msg.value / 1 ether;
         addIfAddressNotExist(msg.sender);
+
+        emit Contribute(msg.sender, msg.value);
     }
 
     function finishGoal() external isCreator {
         require(currentBalance >= goal, "The goal has not been reached");
 
-        // Transfer the money to the creator
         creator.transfer(goal);
 
         emit ProjectFinished(
@@ -96,22 +98,18 @@ contract Project {
             currentBalance
         );
 
-        // Remove the project
         selfdestruct(creator);
     }
 
     function refundGoal() external isCreator {
-        // Refund the money to the contributors
         for (uint i = 0; i < contributorsList.length; i++) {
             payable(contributorsList[i]).transfer(contributors[contributorsList[i]] * 1 ether);
-            // Emit event to return the contribution
             emit ReturnContribution(
                 contributorsList[i],
                 contributors[contributorsList[i]]
             );
         }
 
-        // Remove the project
         selfdestruct(creator);
     }
 }

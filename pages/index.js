@@ -1,12 +1,10 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
-import { load, newProject } from "../src/funcs";
+import { load } from "../src/funcs";
 import Modal from "react-modal/lib/components/Modal";
 import { NavBar } from "../components/navBar";
-import { ProjectsContainer } from "../components/projectsContainer";
-import Web3 from "web3";
+import { ProjectContainer } from "../components/projectContainer";
 
 export default function Home() {
   // useState
@@ -39,6 +37,8 @@ export default function Home() {
     });
   }, []);
 
+  if (!projectContracts) return;
+
   function openModal() {
     setIsOpen(true);
   }
@@ -64,34 +64,44 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <button onClick={openModal}>New project</button>
-        <ProjectsContainer projectContracts={projectContracts} />
+        {projectContracts.map((contract, index) => {
+          return (
+            <ProjectContainer
+              key={index}
+              contract={contract}
+              addressAccount={addressAccount}
+            />
+          );
+        })}
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           contentLabel="Example Modal"
         >
-          <button className="text-red-500 font-black" onClick={closeModal}>X</button>
-        <form>
-          <input
-            className="border-2"
-            type="text"
-            id="title"
-            onChange={(e) => setTitle(e.target.value)}
-          ></input>
-          <input
-            className="border-2"
-            type="text"
-            id="description"
-            onChange={(e) => setDescription(e.target.value)}
-          ></input>
-          <input
-            className="border-2"
-            type="number"
-            id="goal"
-            onChange={(e) => setGoal(e.target.value)}
-          ></input>
-        </form>
-        <button onClick={handleNewProject}>New project</button>
+          <button className="text-red-500 font-black" onClick={closeModal}>
+            X
+          </button>
+          <form>
+            <input
+              className="border-2"
+              type="text"
+              id="title"
+              onChange={(e) => setTitle(e.target.value)}
+            ></input>
+            <input
+              className="border-2"
+              type="text"
+              id="description"
+              onChange={(e) => setDescription(e.target.value)}
+            ></input>
+            <input
+              className="border-2"
+              type="number"
+              id="goal"
+              onChange={(e) => setGoal(e.target.value)}
+            ></input>
+          </form>
+          <button onClick={handleNewProject}>New project</button>
         </Modal>
       </div>
     </>
