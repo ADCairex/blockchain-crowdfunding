@@ -71,6 +71,26 @@ export const ProjectContainer = (props) => {
     }
   };
 
+  const handleButtonProject = () => {
+    if (addressAccount.toUpperCase() == ownerAddress.toUpperCase()) {
+      if (balance == goal)
+        return <button onClick={() => finishProject()}>Finalizar</button>;
+      return <button onClick={() => cancelProject()}>Cancelar</button>;
+    }
+  };
+
+  const finishProject = () => {
+    resolvedContract.finishGoal({
+      from: addressAccount,
+    });
+  };
+
+  const cancelProject = () => {
+    resolvedContract.refundGoal({
+      from: addressAccount,
+    });
+  };
+
   return (
     <>
       <div className="flex flex-col">
@@ -104,6 +124,7 @@ export const ProjectContainer = (props) => {
         >
           Contribute
         </button>
+        {ownerAddress ? handleButtonProject() : null}
       </div>
       <Toaster />
     </>
