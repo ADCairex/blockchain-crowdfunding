@@ -20,9 +20,11 @@ const loadProjects = async () => {
   var projectContracts = await projects.map(async (address) => {
     const projectContract = contract(ProjectJSON);
     projectContract.setProvider(web3.currentProvider);
-    const projectInstance = await projectContract.at(address);
-
-    return projectInstance;
+    try {
+      const projectInstance = await projectContract.at(address);
+      return projectInstance;
+    } catch (error) {}
+    return;
   });
 
   return projectContracts;
