@@ -577,7 +577,7 @@
     "ajv" "^6.10.0"
     "debug" "^4.3.1"
 
-"@truffle/contract@^4.3.19":
+"@truffle/contract@^4.5.14":
   "integrity" "sha512-ofdH7As7d+uyG+6wlZWYoBtN/Nb1efyzooHym4du5Hck4l+EHm8brSYZsHPJrEBA8UN05jYUtBrjUuzbJ/eq0w=="
   "resolved" "https://registry.npmjs.org/@truffle/contract/-/contract-4.5.14.tgz"
   "version" "4.5.14"

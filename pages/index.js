@@ -64,15 +64,17 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <button onClick={openModal}>New project</button>
-        {projectContracts.map((contract, index) => {
-          return (
-            <ProjectContainer
-              key={index}
-              contract={contract}
-              addressAccount={addressAccount}
-            />
-          );
-        })}
+        <div className="m-auto">
+          {projectContracts.map((contract, index) => {
+            return (
+              <ProjectContainer
+                key={index}
+                contract={contract}
+                addressAccount={addressAccount}
+              />
+            );
+          })}
+        </div>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}

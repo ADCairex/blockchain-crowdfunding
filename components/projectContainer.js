@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
+
+const style = {
+  finishButton:
+    "text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-3 py-2.5 text-center mr-2 mb-2 mt-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800",
+  cancelButton:
+    "text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:red-green-300 font-medium rounded-full text-sm px-3 py-2.5 text-center mr-2 mb-2 mt-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800",
+  contributeButton:
+    "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-3 py-2.5 text-center mr-2 mb-2 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
+  contributionInput:
+    "form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
+};
 
 export const ProjectContainer = (props) => {
-  const router = useRouter();
-
   const { contract, addressAccount } = props;
 
   const [resolvedContract, setResolvedContract] = useState(null);
@@ -70,7 +78,6 @@ export const ProjectContainer = (props) => {
       errorMoreThanGoal();
       canContribute = false;
     }
-
     if (canContribute) {
       let x = await resolvedContract.contribute({
         from: addressAccount,
@@ -85,8 +92,19 @@ export const ProjectContainer = (props) => {
   const handleButtonProject = () => {
     if (addressAccount.toUpperCase() == ownerAddress.toUpperCase()) {
       if (balance == goal)
-        return <button onClick={() => finishProject()}>Finalizar</button>;
-      return <button onClick={() => cancelProject()}>Cancelar</button>;
+        return (
+          <button
+            className={style.finishButton}
+            onClick={() => finishProject()}
+          >
+            Finalizar
+          </button>
+        );
+      return (
+        <button className={style.cancelButton} onClick={() => cancelProject()}>
+          Cancelar
+        </button>
+      );
     }
   };
 
@@ -107,15 +125,14 @@ export const ProjectContainer = (props) => {
   if (!finishedProject) {
     return (
       <>
-        <div className="flex flex-col">
-          Title: {title}
-          <br />
-          Description: {description}
-          <br />
-          Goal: {goal}
-          <br />
-          Balance: {balance}
-          <br />
+        <div className="max-w-xl w-1/3 rounded overflow-hidden shadow-lg p-4 m-auto">
+          <p className="font-bold text-xl mb-2">
+            Title: <span className="text-gray-700 text-base">{title}</span>
+          </p>
+          <p className="font-bold text-xl mb-2">
+            Description:{" "}
+            <span className="text-gray-700 text-base">{description}</span>
+          </p>
           <label
             htmlFor="Contribution"
             className="block text-sm font-medium leading-5 text-gray-700"
@@ -125,19 +142,35 @@ export const ProjectContainer = (props) => {
           <input
             id="Contribution"
             type="number"
+            min="0"
             value={contribution}
             onChange={(e) => {
               setContribution(e.target.value);
             }}
-            className="border-2 h-full w-12"
+            className={style.contributionInput}
           />
           <button
+            className={style.contributeButton}
             onClick={() => {
               handleContribution();
             }}
           >
             Contribute
           </button>
+          <br />
+          <br />
+          <div className="flex flex-row justify-between">
+            <span className="font-bold text-xl mb-2 w-min whitespace-nowrap">
+              {balance} ETH
+            </span>
+            <span className="font-bold text-xl mb-2 w-min whitespace-nowrap">
+              {goal} ETH
+            </span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div className="bg-blue-600 h-2.5 rounded-full"></div>
+          </div>
+          <br />
           {ownerAddress ? handleButtonProject() : null}
         </div>
         <Toaster />
