@@ -125,7 +125,7 @@ export const ProjectContainer = (props) => {
   if (!finishedProject) {
     return (
       <>
-        <div className="max-w-xl w-1/3 rounded overflow-hidden shadow-lg p-4 m-auto">
+        <div className="max-w-xl w-1/3 rounded overflow-hidden shadow-xl p-4 m-auto mb-7 border-2">
           <p className="font-bold text-xl mb-2">
             Title: <span className="text-gray-700 text-base">{title}</span>
           </p>
