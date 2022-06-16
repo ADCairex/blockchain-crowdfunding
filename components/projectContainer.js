@@ -7,7 +7,7 @@ const style = {
   cancelButton:
     "text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:red-green-300 font-medium rounded-full text-sm px-3 py-2.5 text-center mr-2 mb-2 mt-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800",
   contributeButton:
-    "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-3 py-2.5 text-center mr-2 mb-2 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
+    "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-3 py-2.5 text-center mr-2 mb-2 mt-5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
   contributionInput:
     "form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
 };
@@ -122,6 +122,14 @@ export const ProjectContainer = (props) => {
     setRefresh(true);
   };
 
+  const progressBarStyle = () => {
+    if (goal == 0) return;
+    ("bg-blue-600 h-2.5 rounded-full w-0");
+    return (
+      "bg-blue-600 h-2.5 rounded-full w-[" + Math.round((balance / goal) * 100) + "%]"
+    );
+  };
+
   if (!finishedProject) {
     return (
       <>
@@ -157,9 +165,7 @@ export const ProjectContainer = (props) => {
           >
             Contribute
           </button>
-          <br />
-          <br />
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row justify-between mt-5">
             <span className="font-bold text-xl mb-2 w-min whitespace-nowrap">
               {balance} ETH
             </span>
@@ -168,7 +174,7 @@ export const ProjectContainer = (props) => {
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div className="bg-blue-600 h-2.5 rounded-full"></div>
+            <div className={progressBarStyle()}></div>
           </div>
           <br />
           {ownerAddress ? handleButtonProject() : null}
