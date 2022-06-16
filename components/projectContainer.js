@@ -122,12 +122,16 @@ export const ProjectContainer = (props) => {
     setRefresh(true);
   };
 
-  const progressBarStyle = () => {
-    if (goal == 0) return;
-    ("bg-blue-600 h-2.5 rounded-full w-0");
-    return (
-      "bg-blue-600 h-2.5 rounded-full w-[" + Math.round((balance / goal) * 100) + "%]"
-    );
+  const progressBarPercentage = () => {
+    if (goal == 0) return 0;
+    return Math.round((balance / goal) * 100);
+  };
+
+  const colorProgressBar = () => {
+    if (progressBarPercentage() < 25) return "bg-red-500";
+    if (progressBarPercentage() < 50) return "bg-orange-500";
+    if (progressBarPercentage() < 75) return "bg-yellow-500";
+    return "bg-green-500";
   };
 
   if (!finishedProject) {
@@ -174,7 +178,10 @@ export const ProjectContainer = (props) => {
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div className={progressBarStyle()}></div>
+            <div
+              style={{ width: progressBarPercentage() + "%" }}
+              className={colorProgressBar() + " h-2.5 rounded-full"}
+            ></div>
           </div>
           <br />
           {ownerAddress ? handleButtonProject() : null}
