@@ -40,29 +40,30 @@ export const ProjectContainer = (props) => {
   if (!contract) {
     return <div>Loading...</div>;
   }
-
+  contract.then((e) => {
+    if (!refresh) return;
+    setRefresh(false);
+    try {
+      e.title().then((titleResponse) => setTitle(titleResponse));
+      e.description().then((descriptionResponse) =>
+        setDescription(descriptionResponse)
+      );
+      e.goal().then((goalResponse) => setGoal(goalResponse.words[0]));
+      e.seeContractBalance().then((balanceResponse) =>
+        setBalance(parseInt(balanceResponse.toString()) / 10 ** 18)
+      );
+      e.seeOwner().then((ownerAddressResponse) =>
+        setOwnerAddress(ownerAddressResponse)
+      );
+      setResolvedContract(e);
+    } catch (error) {
+      setFinishedProject(true);
+    }
+  });
+  /*
   useEffect(() => {
-    contract.then((e) => {
-      if (!refresh) return;
-      setRefresh(false);
-      try {
-        e.title().then((titleResponse) => setTitle(titleResponse));
-        e.description().then((descriptionResponse) =>
-          setDescription(descriptionResponse)
-        );
-        e.goal().then((goalResponse) => setGoal(goalResponse.words[0]));
-        e.seeContractBalance().then((balanceResponse) =>
-          setBalance(parseInt(balanceResponse.toString()) / 10 ** 18)
-        );
-        e.seeOwner().then((ownerAddressResponse) =>
-          setOwnerAddress(ownerAddressResponse)
-        );
-        setResolvedContract(e);
-      } catch (error) {
-        setFinishedProject(true);
-      }
-    });
-  }, [refresh]);
+    
+  }, [refresh]);*/
 
   const handleContribution = async () => {
     let canContribute = true;

@@ -48,7 +48,7 @@ export default function Home() {
         setProjectContracts(e.projectContracts);
       });
     });
-  }, []);
+  }, [refresh]);
 
   if (!projectContracts) return;
 

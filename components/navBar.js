@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const styles = {
@@ -40,9 +41,12 @@ export const NavBar = (props) => {
         <div className="container flex flex-row m-auto justify-between">
           <Link href="/">
             <a className="flex items-center">
-              <img
+              <Image
                 // TODO: Put an ether svg
                 src="/favicon.ico"
+                alt="Image"
+                width={32}
+                height={32}
                 className="mr-3 h-6 sm:h-9"
               />
               <span className="self-center text-xl font-semibold whitespace-nowrap text-white">
