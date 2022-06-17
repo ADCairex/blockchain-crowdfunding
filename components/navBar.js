@@ -17,7 +17,6 @@ const styles = {
 };
 
 export const NavBar = (props) => {
-
   const transformAddress = (addressAccount) => {
     let finalAddress = "";
     if (!addressAccount) return;
@@ -52,7 +51,7 @@ export const NavBar = (props) => {
             </a>
           </Link>
           <div className="flex md:order-2">
-            <div className="hidden relative mr-3 md:mr-0 md:block">
+            <div className="hidden relative md:block mr-4">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg
                   className="w-5 h-5 text-gray-500"
@@ -70,11 +69,16 @@ export const NavBar = (props) => {
               <input
                 type="text"
                 id="searchProject"
-                className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                className="block p-2 pl-10 w-full text-white bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Buscar proyecto..."
                 autoComplete="false"
                 name="hidden"
               />
+            </div>
+            <div className="hidden justify-between items-center w-full md:flex md:w-auto md:order-3">
+              <p className={styles.liNavBar}>
+                {transformAddress(props.addressAccount)}
+              </p>
             </div>
             <button
               data-collapse-toggle="mobile-menu-3"
@@ -108,23 +112,6 @@ export const NavBar = (props) => {
                 ></path>
               </svg>
             </button>
-          </div>
-          <div className="hidden justify-between items-center w-full md:flex md:w-auto md:order-5"></div>
-          <div className="hidden justify-between items-center w-full md:flex md:w-auto md:order-4">
-            <p className={styles.liNavBar}>
-              {transformAddress(props.addressAccount)}
-            </p>
-          </div>
-          <div
-            className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1"
-            id="mobile-menu-3"
-          >
-            <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-              <li className={styles.liNavBar}>Libros</li>
-              <li className={styles.liNavBar}>Libros</li>
-              <li className={styles.liNavBar}>Libros</li>
-              <li className={styles.liNavBar}>Libros</li>
-            </ul>
           </div>
         </div>
       </nav>
