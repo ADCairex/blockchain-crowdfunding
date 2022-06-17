@@ -38,7 +38,7 @@ contract Project {
         string memory projectTitle,
         string memory projectDescription,
         uint projectGoal
-    ) public {
+    ) {
         creator = projectCreator;
         title = projectTitle;
         description = projectDescription;
